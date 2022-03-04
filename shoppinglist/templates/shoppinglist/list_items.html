@@ -1,0 +1,41 @@
+{% block content %}
+<!-- <div id="maincontent"> -->
+	{% if items %}
+		{% for item in items %}
+			<div class="card u-round u-shadow u-flex u-justify-space-between animated fadeIn {% if item.checked is True %} text-gray-400 bg-gray-000 {% endif %}">
+				<div class="w-80 m-1">
+					<div class="form-ext-control form-ext-checkbox">
+						<input id="item{{ item.id }}" class="form-ext-input" type="checkbox" {% if item.checked is True %} checked {% endif %} onchange="updateChecked({{ item.id }})" />
+						{{ item.id|json_script:item.id }}
+						<label class="form-ext-label font-bold" for="item{{ item.id }}">{{ item.item }}</label>
+						<p class="text-gray-400 p-0 m-0 ml-1"><small>{{ item.item_info }}</small></p>
+					</div>
+				</div>
+				{% if item.checked is False %}
+				<div class="m-1 w-20 u-flex u-justify-space-between">
+					<a href="{% url 'shoppinglist:details' item.id %}" class="text-teal-400"><span class="material-icons"><small>edit</small></span></a>
+					<a href="{% url 'shoppinglist:delete' item.id %}" class="text-red-500"><span class="material-icons"><small>delete</small></span></a>
+				</div>
+				{% endif %}
+			</div>
+		{% endfor %}
+	{% else %}
+		<p>Liste ist leer</p>
+	{% endif %}
+<!-- </div> -->
+	<script>
+		function updateChecked(str) {
+			var item = str;
+			var item_id = JSON.parse(document.getElementById(item).textContent);
+			// alert(item_id);
+			var xmlhttp = new XMLHttpRequest();
+		    xmlhttp.onreadystatechange = function() {
+		    	if (this.readyState == 4 && this.status == 200) {
+		        	document.getElementById("maincontent").innerHTML = this.responseText;
+		      	}
+		    };
+			xmlhttp.open("GET", "/check/"+item_id);
+			xmlhttp.send();
+		}
+	</script>
+{% endblock %}

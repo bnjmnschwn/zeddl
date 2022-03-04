@@ -1,0 +1,90 @@
+{% load static %}
+<html>
+<head>
+	<title>Zeddl</title>
+	<link rel="manifest" href="{% static 'manifest.json' %}">
+	<link rel="stylesheet" href="{% static 'css/cirrus.min.css' %}">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<section id="maincontent">
+	<div class="content">
+		<div class="u-flex u-justify-space-between">
+			<div>
+				<h1><a href="{% url 'shoppinglist:index' %}">Zeddl</a></h1>
+			</div>
+			<div class="mt-3">
+				<a href="{% url 'shoppinglist:delete_all' %}" class="btn btn-light u-shadow">Liste leeren</a>
+
+				<!-- <a href="#settings-modal" class="text-gray-500"><span class="material-icons">settings</span></a> -->
+			</div>
+		</div>
+
+		<div class="modal" id="settings-modal">
+	    <a href="#searchModalDialog" class="modal-overlay close-btn" aria-label="Close"></a>
+	    	<div class="modal-content">
+		    	<div class="modal-header">
+	        		<div class="u-pull-right m-1">
+	        			<a href="#anchor-to-background" aria-label="Close">
+	        				<span class="material-icons m-0 p-0">close</span>
+	        			</a>
+	    			</div>
+		        	<div class="modal-title">Einstellungen</div>
+		    	</div>
+		    	<div class="modal-body">
+		    	</div>
+			</div>
+		</div>
+
+		<div class="space mb-1"></div>
+		{% if messages %}
+			{% for message in messages %}
+			<div id="msg" class="u-absolute w-60" style="bottom: 5%; left: 5%">
+				<div class="toast toast--{{ message.tags }} p-1 u-round">
+	        		<button class="btn-close"></button>
+	        		<p>{{ message }}</p>
+	    		</div>
+	    	</div>
+			<script>
+				setTimeout(function() {
+	    		$('#msg').fadeOut(500);
+				}, 1500); 
+			</script>
+			{% endfor %}
+		{% endif %}
+		{% block content %}{% include "shoppinglist/list_items.html" %}{% endblock %}
+		<a class="btn btn-link btn-animated u-shadow btn--circle" style="position: fixed; bottom: 5%; right: 5%; z-index: 100" href="#add-modal"><span class="material-icons m-0 p-0">add</span></a>
+	</div>
+
+	<div class="modal" id="add-modal">
+    <a href="#searchModalDialog" class="modal-overlay close-btn" aria-label="Close"></a>
+    	<div class="modal-content">
+	    	<div class="modal-header">
+        		<div class="u-pull-right m-1">
+        			<a href="#anchor-to-background" aria-label="Close">
+        				<span class="material-icons m-0 p-0">close</span>
+        			</a>
+    			</div>
+	        	<div class="modal-title">Artikel hinzufügen</div>
+	    	</div>
+    		<form action="{% url 'shoppinglist:add' %}" method="post">
+	    	<div class="modal-body">
+    			{% csrf_token %}
+	    		<div class="input-control">
+					<input name="item" type="text" placeholder="Artikel" />
+                </div>
+	    		<div class="input-control">
+					<input name="item_info" type="text" placeholder="Infos" />
+                </div>
+	    	</div>
+	    	<div class="modal-footer">
+	    		<button type="submit" class="btn btn-danger u-pull-right">Hinzufügen</button>
+	    	</form>
+	    	</div>
+		</div>
+	</div>
+</section>
+
+</body>
+</html>

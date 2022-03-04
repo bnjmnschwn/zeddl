@@ -1,0 +1,14 @@
+{
+    "name": "ZEDDL",
+    "short_name": "Zeddl",
+    "start_url": "/",
+    "scope": ".",
+    "display": "standalone",
+    "background_color": "#FFF",
+    "theme_color": "#FFF",
+    "description": "Einkaufs:Zeddl",
+    "dir": "ltr",
+    "lang": "en-US",
+    "orientation": "portrait-primary",
+    
+}

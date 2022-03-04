@@ -1,0 +1,23 @@
+{% extends "shoppinglist/base.html" %}
+
+{% block content %}
+<div>Artikel ändern</div>
+	<div>
+		<form action="{% url 'shoppinglist:edit' item.id %}" method="post">
+			{% csrf_token %}
+			<div>
+				<input name="id" type="text" value="{{ item.id }}" hidden />
+			</div>
+			<div>
+				<input name="checked" type="checkbox" {% if item.checked is True %} checked {% endif %} hidden />
+			</div>
+				<div class="input-control">
+					<input name="item" type="text" value="{{ item.item }}" />
+				</div>
+				<div class="input-control">
+					<input name="item_info" type="text" value="{{ item.item_info }}" />
+				</div>
+			<button type="submit" class="btn btn-danger u-pull-right">Übernehmen</button>
+		</form>
+	</div>
+{% endblock %}
