@@ -1,5 +1,4 @@
 {% block content %}
-<!-- <div id="maincontent"> -->
 	{% if items %}
 		{% for item in items %}
 			<div class="card u-round u-shadow u-flex u-justify-space-between animated fadeIn {% if item.checked is True %} text-gray-400 bg-gray-000 {% endif %}">
@@ -22,12 +21,10 @@
 	{% else %}
 		<p>Liste ist leer</p>
 	{% endif %}
-<!-- </div> -->
 	<script>
 		function updateChecked(str) {
 			var item = str;
 			var item_id = JSON.parse(document.getElementById(item).textContent);
-			// alert(item_id);
 			var xmlhttp = new XMLHttpRequest();
 		    xmlhttp.onreadystatechange = function() {
 		    	if (this.readyState == 4 && this.status == 200) {

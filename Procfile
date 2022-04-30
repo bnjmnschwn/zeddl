@@ -1,1 +1,1 @@
-web:gunicorn zeddl.wsgi:application --log-file
+web: gunicorn Zeddl.wsgi --log-file -
